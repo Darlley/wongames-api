@@ -1,0 +1,52 @@
+diff --git a/node_modules/@strapi/admin/admin/src/pages/HomePage/HomeHeader.js b/node_modules/@strapi/admin/admin/src/pages/HomePage/HomeHeader.js
+index 8fb94c5..9e165d1 100644
+--- a/node_modules/@strapi/admin/admin/src/pages/HomePage/HomeHeader.js
++++ b/node_modules/@strapi/admin/admin/src/pages/HomePage/HomeHeader.js
+@@ -30,23 +30,13 @@ const HomeHeader = ({ hasCreatedContentType, onCreateCT }) => {
+                 })}
+           </Typography>
+           <WordWrap textColor="neutral600" variant="epsilon">
+-            {hasCreatedContentType
+-              ? formatMessage({
+-                  id: 'app.components.HomePage.welcomeBlock.content.again',
+-                  defaultMessage:
+-                    'We hope you are making progress on your project! Feel free to read the latest news about Strapi. We are giving our best to improve the product based on your feedback.',
+-                })
+-              : formatMessage({
+-                  id: 'app.components.HomePage.welcomeBlock.content',
+-                  defaultMessage:
+-                    'Congrats! You are logged as the first administrator. To discover the powerful features provided by Strapi, we recommend you to create your first Content type!',
+-                })}
++            Welcome to Won Games Admin! Add more games, categories and publishers from Content Manager.
+           </WordWrap>
+           {hasCreatedContentType ? (
+-            <Link isExternal href="https://strapi.io/blog">
++            <Link isExternal href="https://reactavancado.com.br/">
+               {formatMessage({
+                 id: 'app.components.HomePage.button.blog',
+-                defaultMessage: 'See more on the blog',
++                defaultMessage: 'Learn more in our course!',
+               })}
+             </Link>
+           ) : (
+diff --git a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
+index 21ab701..587e1ff 100644
+--- a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
++++ b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
+@@ -78,14 +78,14 @@ export const HomePageCE = () => {
+               />
+             </GridItem>
+           </Grid>
+-          <Grid gap={6}>
++          {/* <Grid gap={6}>
+             <GridItem col={8} s={12}>
+               {showGuidedTour ? <GuidedTourHomepage /> : <ContentBlocks />}
+             </GridItem>
+             <GridItem col={4} s={12}>
+               <SocialLinks />
+             </GridItem>
+-          </Grid>
++          </Grid> */}
+         </Box>
+       </Main>
+     </Layout>
