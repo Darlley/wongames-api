@@ -15,7 +15,6 @@ const config = {
       "app.components.LeftMenu.navbrand.title": "Won Games Dashboard",
     },
   },
-
   auth: {
     logo: Logo,
   },
@@ -56,6 +55,10 @@ const config = {
       },
     },
   },
+  tutorials: false,
+  notifications: {
+    releases: false
+  }
 };
 
 const bootstrap = () => {};
