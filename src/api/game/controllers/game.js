@@ -11,7 +11,11 @@ module.exports = createCoreController(
     ({ strapi }) => ({
         async populate(ctx) {
           console.log("RODANDO NO SERVIDOR");
-    
+
+          // console.log(ctx.query);
+
+          await strapi.service("api::game.game").populate(ctx.query)
+
           ctx.send("FINALIZADO NO CLIENT");
         },
     })
