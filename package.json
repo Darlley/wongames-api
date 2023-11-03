@@ -17,6 +17,9 @@
     "@strapi/plugin-i18n": "4.15.0",
     "@strapi/plugin-users-permissions": "4.15.0",
     "@strapi/strapi": "4.15.0",
+    "axios": "^1.6.0",
+    "node-fetch": "^3.3.2",
+    "node-fetch-commonjs": "^3.3.2",
     "patch-package": "^8.0.0",
     "pg": "8.8.0"
   },
