@@ -1,23 +1,45 @@
 'use strict';
 
 /**
- * game service
- */
 
-const fetch = require('node-fetch-commonjs');
+game service */
+const fetch = require('node-fetch-commonjs'); 
+const {JSDOM} = require('jsdom'); 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::game.game', () => ({
-    async populate(params) {
-        const gogApiUrl = `https://www.gog.com/games/ajax/filtered?mediaType=game?sort=rating`;
-    
-        // Usando fetch em vez de axios
-        fetch(gogApiUrl)
-          .then(response => response.json()) // Convertendo a resposta em JSON
-          .then(data => {
-            const products = data.products; // Acessando a propriedade products do objeto data
-            console.log(products[1]); // Mostrando o segundo produto no console
-          })
-          .catch(error => console.error(error)); // Mostrando o erro no console se houver
-      },
+async function getGameInfo(slug){ 
+  const gogSlug = slug.replaceAll('-', '_').toLowerCase();
+  const response = await fetch(`https://www.gog.com/game/${gogSlug}`); 
+  const data = await response.text(); 
+  const dom = new JSDOM(data);
+
+  const $row_description = dom.window.document.querySelector(".description")
+  const description = $row_description.innerHTML
+  const short_description = $row_description.textContent.slice(0,160).replace(/(\r\n|\n|\r)/gm, "");
+  const ratingElement = dom.window.document.querySelector('.age-restrictions__icon use')
+  
+  return {
+    description: description ? description : '',
+    short_description: short_description ? short_description : '',
+    rating: ratingElement ? 
+      ratingElement.getAttribute("xlink:href")
+      .replace(/_/g, "") 
+      .replace("#", "") 
+    : 'BR0'
+  }
+}
+
+module.exports = createCoreService('api::game.game', () => ({ 
+  async populate(params) {
+    const gogApiUrl = 'https://www.gog.com/games/ajax/filtered?mediaType=game?sort=rating';
+
+    // Usando await e response.json()
+    const response = await fetch(gogApiUrl);
+    const data = await response.json();
+    const products = data.products;
+    // Usando await para obter o dom e mostrando no console
+    const dom = await getGameInfo(products[2].slug);
+    console.log(dom);
+  },
+
 }));
