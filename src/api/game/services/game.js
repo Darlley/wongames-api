@@ -5,6 +5,7 @@
 game service */
 const fetch = require('node-fetch-commonjs'); 
 const {JSDOM} = require('jsdom'); 
+const slugify = require('slugify'); 
 const { createCoreService } = require('@strapi/strapi').factories;
 
 async function getGameInfo(slug){ 
@@ -37,9 +38,32 @@ module.exports = createCoreService('api::game.game', () => ({
     const response = await fetch(gogApiUrl);
     const data = await response.json();
     const products = data.products;
+
     // Usando await para obter o dom e mostrando no console
-    const dom = await getGameInfo(products[2].slug);
-    console.log(dom);
+    // const dom = await getGameInfo(products[2].slug);
+    // console.log(dom);
+
+    
+    await strapi.service('api::developer.developer').create({
+      data: {
+        name: products[2].developer,
+        slug: slugify(products[2].developer, {
+          stric: true,
+          lower: true
+        })
+      }
+    })
+  
+    await strapi.service('api::publisher.publisher').create({
+      data: {
+        name: products[2].publisher,
+        slug: slugify(products[2].publisher, {
+          stric: true,
+          lower: true
+        })
+      }
+    })
+
   },
 
 }));
