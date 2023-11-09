@@ -30,6 +30,52 @@ async function getGameInfo(slug){
   }
 }
 
+async function getByName(name, entityService){
+  const item = await strapi.service(`api::${entityService}.${entityService}`).find({ 
+    filters: { name },
+  })
+
+  return item.results.length > 0 ? item.results[0] : null;
+}
+
+async function createByName(name, entityService){
+  if(name && entityService){
+    const item = await getByName(name, entityService)
+    if(!item){
+      await strapi.service(`api::${entityService}.${entityService}`).create({
+        data: {
+          name: name,
+          slug: slugify(name, {
+            stric: true,
+            lower: true
+          })
+        }
+      })
+    }
+
+    // if(!!window.Notification){
+    //   if(Notification.permission === 'granted'){
+    //     new Notification('Não completado!', {
+    //       body: 'Este usuário já existe!',
+    //       icon: 'https://cdn-icons-png.flaticon.com/512/4980/4980801.png'
+    //     })
+    //   }
+
+    //   Notification.requestPermission().then(p => {
+    //     if(p === 'granted'){
+    //       new Notification('Não completado', {
+    //         body: 'Este usuário já existe!',
+    //         icon: 'https://cdn-icons-png.flaticon.com/512/4980/4980801.png'
+    //       })
+    //     }
+    //     console.info('User blocked notifications.')
+    //   }).catch(function (err){
+    //     console.info(err)
+    //   })
+    // }
+  }
+}
+
 module.exports = createCoreService('api::game.game', () => ({ 
   async populate(params) {
     const gogApiUrl = 'https://www.gog.com/games/ajax/filtered?mediaType=game?sort=rating';
@@ -43,26 +89,34 @@ module.exports = createCoreService('api::game.game', () => ({
     // const dom = await getGameInfo(products[2].slug);
     // console.log(dom);
 
+    console.log('estou tentando cadastrar o products[0].developer = Volition')
+
+    await createByName(products[2].developer, 'developer')
+    await createByName(products[2].publisher, 'publisher')
     
-    await strapi.service('api::developer.developer').create({
-      data: {
-        name: products[2].developer,
-        slug: slugify(products[2].developer, {
-          stric: true,
-          lower: true
-        })
-      }
+    products[2].genres.map(async (category) => {
+      await createByName(category, 'category')
     })
+    
+    // await strapi.service('api::developer.developer').create({
+    //   data: {
+    //     name: developer,
+    //     slug: slugify(developer, {
+    //       stric: true,
+    //       lower: true
+    //     })
+    //   }
+    // })
   
-    await strapi.service('api::publisher.publisher').create({
-      data: {
-        name: products[2].publisher,
-        slug: slugify(products[2].publisher, {
-          stric: true,
-          lower: true
-        })
-      }
-    })
+    // await strapi.service('api::publisher.publisher').create({
+    //   data: {
+    //     name: products[2].publisher,
+    //     slug: slugify(products[2].publisher, {
+    //       stric: true,
+    //       lower: true
+    //     })
+    //   }
+    // })
 
   },
 
