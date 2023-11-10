@@ -8,6 +8,12 @@ const {JSDOM} = require('jsdom');
 const slugify = require('slugify'); 
 const { createCoreService } = require('@strapi/strapi').factories;
 
+const gameService = "api::game.game";
+const publisherService = "api::publisher.publisher";
+const developerService = "api::developer.developer";
+const categoryService = "api::category.category";
+const platformService = "api::platform.platform";
+
 async function getGameInfo(slug){ 
   const gogSlug = slug.replaceAll('-', '_').toLowerCase();
   const response = await fetch(`https://www.gog.com/game/${gogSlug}`); 
@@ -76,6 +82,42 @@ async function createByName(name, entityService){
   }
 }
 
+async function createManyToManyData(products){
+  const developerSet = new Set();
+  const publisherSet = new Set();
+  const categoriesSet = new Set();
+  const platformsSet = new Set();
+
+  products.forEach(product => {
+    const {developer, publisher, genres, supportedOperatingSystems} = product
+
+    genres?.forEach((name) => {
+      console.log(genres, name)
+      categoriesSet.add(name)
+    })
+    supportedOperatingSystems?.forEach(({item}) => {
+      platformsSet.add(item)
+    })
+
+    if(developer){
+      developerSet.add(developer)
+    }
+
+    if(publisher){
+      publisherSet?.add(publisher)
+    }
+  });
+
+  const createCall = (set, entityName) => Array.from(set).map((name) => createByName(name, entityName))
+
+  return Promise.all([
+    ...createCall(developerSet, 'developer'),
+    ...createCall(publisherSet, 'publisher'),
+    ...createCall(categoriesSet, 'category'),
+    ...createCall(platformsSet, 'platform'),
+  ])
+}
+
 module.exports = createCoreService('api::game.game', () => ({ 
   async populate(params) {
     const gogApiUrl = 'https://www.gog.com/games/ajax/filtered?mediaType=game?sort=rating';
@@ -88,15 +130,6 @@ module.exports = createCoreService('api::game.game', () => ({
     // Usando await para obter o dom e mostrando no console
     // const dom = await getGameInfo(products[2].slug);
     // console.log(dom);
-
-    console.log('estou tentando cadastrar o products[0].developer = Volition')
-
-    await createByName(products[2].developer, 'developer')
-    await createByName(products[2].publisher, 'publisher')
-    
-    products[2].genres.map(async (category) => {
-      await createByName(category, 'category')
-    })
     
     // await strapi.service('api::developer.developer').create({
     //   data: {
@@ -117,6 +150,17 @@ module.exports = createCoreService('api::game.game', () => ({
     //     })
     //   }
     // })
+
+    // console.log('estou tentando cadastrar o products[0].developer = Volition')
+
+    // await createByName(products[2].developer, 'developer')
+    // await createByName(products[2].publisher, 'publisher')
+    
+    // products[2].genres.map(async (category) => {
+    //   await createByName(category, 'category')
+    // })
+
+    await createManyToManyData([products[0], products[1], products[2]])
 
   },
 
