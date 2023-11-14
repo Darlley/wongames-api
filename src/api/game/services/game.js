@@ -22,7 +22,7 @@ async function getGameInfo(slug){
 
   const $row_description = dom.window.document.querySelector(".description")
   const description = $row_description.innerHTML
-  const short_description = $row_description.textContent.slice(0,160).replace(/(\r\n|\n|\r)/gm, "");
+  const short_description = $row_description.textContent.trim().slice(0,160);
   const ratingElement = dom.window.document.querySelector('.age-restrictions__icon use')
   
   return {
@@ -37,11 +37,14 @@ async function getGameInfo(slug){
 }
 
 async function getByName(name, entityService){
-  const item = await strapi.service(`api::${entityService}.${entityService}`).find({ 
-    filters: { name },
-  })
-
-  return item.results.length > 0 ? item.results[0] : null;
+  try {
+    const item = await strapi.service(`api::${entityService}.${entityService}`).find({ 
+      populate: name,
+    })
+    return item.results.length > 0 ? item.results[0] : null;
+  }catch(error){
+    console.log("getByName:", error);
+  }
 }
 
 async function createByName(name, entityService){
@@ -58,27 +61,6 @@ async function createByName(name, entityService){
         }
       })
     }
-
-    // if(!!window.Notification){
-    //   if(Notification.permission === 'granted'){
-    //     new Notification('Não completado!', {
-    //       body: 'Este usuário já existe!',
-    //       icon: 'https://cdn-icons-png.flaticon.com/512/4980/4980801.png'
-    //     })
-    //   }
-
-    //   Notification.requestPermission().then(p => {
-    //     if(p === 'granted'){
-    //       new Notification('Não completado', {
-    //         body: 'Este usuário já existe!',
-    //         icon: 'https://cdn-icons-png.flaticon.com/512/4980/4980801.png'
-    //       })
-    //     }
-    //     console.info('User blocked notifications.')
-    //   }).catch(function (err){
-    //     console.info(err)
-    //   })
-    // }
   }
 }
 
@@ -92,7 +74,6 @@ async function createManyToManyData(products){
     const {developer, publisher, genres, supportedOperatingSystems} = product
 
     genres?.forEach((name) => {
-      console.log(genres, name)
       categoriesSet.add(name)
     })
     supportedOperatingSystems?.forEach(({item}) => {
@@ -118,50 +99,49 @@ async function createManyToManyData(products){
   ])
 }
 
+async function createGames(products){
+  
+  await Promise.all(
+    products.map(async (product) => {
+      const item = await getByName(product.title, 'game');
+
+      if (!item) {
+        const game = await strapi.service(gameService).create({
+          data: {
+            name: product.title,
+            slug: product.slug,
+            price: Number(product.price.amount),
+            release_date: new Date(product.globalReleaseDate),
+            categories: await Promise.all(
+              product.genres.map((category) => getByName(category, 'category'))
+            ),
+            platforms: await Promise.all(
+              product.supportedOperatingSystems.map((platform) => getByName(platform, 'platform'))
+            ),
+            developers: await getByName(product.developer, 'developer'),
+            publisher: await getByName(product.publisher, 'publisher'),
+
+            ...(await getGameInfo(product.slug)),
+
+            publishedAt: new Date(),
+          }
+        })
+        return game
+      }
+    })
+  )
+}
+
 module.exports = createCoreService('api::game.game', () => ({ 
   async populate(params) {
     const gogApiUrl = 'https://www.gog.com/games/ajax/filtered?mediaType=game?sort=rating';
 
-    // Usando await e response.json()
     const response = await fetch(gogApiUrl);
     const data = await response.json();
     const products = data.products;
 
-    // Usando await para obter o dom e mostrando no console
-    // const dom = await getGameInfo(products[2].slug);
-    // console.log(dom);
-    
-    // await strapi.service('api::developer.developer').create({
-    //   data: {
-    //     name: developer,
-    //     slug: slugify(developer, {
-    //       stric: true,
-    //       lower: true
-    //     })
-    //   }
-    // })
-  
-    // await strapi.service('api::publisher.publisher').create({
-    //   data: {
-    //     name: products[2].publisher,
-    //     slug: slugify(products[2].publisher, {
-    //       stric: true,
-    //       lower: true
-    //     })
-    //   }
-    // })
-
-    // console.log('estou tentando cadastrar o products[0].developer = Volition')
-
-    // await createByName(products[2].developer, 'developer')
-    // await createByName(products[2].publisher, 'publisher')
-    
-    // products[2].genres.map(async (category) => {
-    //   await createByName(category, 'category')
-    // })
-
-    await createManyToManyData([products[0], products[1], products[2]])
-
+    await createManyToManyData([products[0], products[1]])
+    await createGames([products[0], products[1]])
   },
 
 }));
