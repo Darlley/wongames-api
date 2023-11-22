@@ -40,14 +40,12 @@ async function getGameInfo(slug) {
 }
 
 async function getByName(name, nameEntityService) {
-  console.log(name, nameEntityService);
   try {
     const item = await strapi
       .service(`api::${nameEntityService}.${nameEntityService}`)
       .find({
         filters: { name },
       });
-    console.log(item);
     return item.results.length > 0 ? item.results[0] : null;
   } catch (error) {
     console.log("getByName:", error);
@@ -64,7 +62,7 @@ async function createByName(name, nameEntityService) {
           data: {
             name: name,
             slug: slugify(name, {
-              stric: true,
+              strict: true,
               lower: true,
             }),
           },
@@ -81,11 +79,12 @@ async function createManyToManyData(products) {
 
   products.forEach((product) => {
     const { developer, publisher, genres, supportedOperatingSystems } = product;
-
+    
     genres?.forEach((name) => {
       categoriesSet.add(name);
     });
-    supportedOperatingSystems?.forEach(({ item }) => {
+
+    supportedOperatingSystems?.forEach(( item ) => {
       platformsSet.add(item);
     });
 
@@ -98,8 +97,9 @@ async function createManyToManyData(products) {
     }
   });
 
-  const createCall = (set, entityName) =>
-    Array.from(set).map((name) => createByName(name, entityName));
+  
+
+  const createCall = (set, nameEntityService) => Array.from(set).map((name) => createByName(name, nameEntityService));
 
   return Promise.all([
     ...createCall(developerSet, "developer"),
@@ -111,8 +111,10 @@ async function createManyToManyData(products) {
 
 async function createGames(products) {
   await Promise.all(
-    products.forEach(async (product) => {
+    products.map(async (product) => {
       const item = await getByName(product.title, "game");
+      
+      console.log(product);
 
       if (!item) {
         console.info(`Creating: ${product.title}...`);
@@ -124,18 +126,15 @@ async function createGames(products) {
             price: Number(product.price.amount),
             release_date: new Date(product.globalReleaseDate),
             categories: await Promise.all(
-              product.genres &&
-                product.genres.length > 0 &&
-                product.genres.map((category) =>
-                  getByName(category, "category")
+              product.genres?.map((name) =>
+                  getByName(name, "category")
                 )
             ),
+
             platforms: await Promise.all(
-              product.supportedOperatingSystems &&
-                product.supportedOperatingSystems.length > 0 &&
-                product.supportedOperatingSystems.map((platform) =>
-                  getByName(platform, "platform")
-                )
+              product.supportedOperatingSystems?.map((platform) =>
+                getByName(platform, "platform")
+              )
             ),
             developers:
               product.developer &&
