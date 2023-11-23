@@ -109,6 +109,27 @@ async function createManyToManyData(products) {
   ]);
 }
 
+async function setImage({ image, game, field = 'cover' }){
+  const response = await fetch(image);
+  const data = await response.arrayBuffer();
+  const buffer = Buffer.from(data, "base64");
+  const FormData = require("form-data");
+
+  const formData = new FormData();
+  formData.append('refId', game.id);
+  formData.append('red', gameService);
+  formData.append('field', field);
+  formData.append('files', buffer, {
+    filename: `${game.slug}.jpg` 
+  });
+
+  await fetch(`http://localhost:1337/api/upload/`, {
+    method: "POST",
+    body: formData,
+    // Não é necessário definir o cabeçalho Content-Type para multipart/form-data
+  });
+}
+
 async function createGames(products) {
   await Promise.all(
     products.map(async (product) => {
@@ -148,6 +169,18 @@ async function createGames(products) {
             publishedAt: new Date(),
           },
         });
+
+        await setImage({
+          image: product.image, 
+          game
+        })
+        await Promise.all(
+          product.gallery.slice(0,5).map((url) => setImage({
+            image: url,
+            game,
+            field: 'gallery'
+          }))
+        )
 
         return game;
       }
