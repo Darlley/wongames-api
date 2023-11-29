@@ -7,6 +7,7 @@ const fetch = require("node-fetch-commonjs");
 const { JSDOM } = require("jsdom");
 const slugify = require("slugify");
 const { createCoreService } = require("@strapi/strapi").factories;
+const FormData = require("form-data");
 
 const gameService = "api::game.game";
 const publisherService = "api::publisher.publisher";
@@ -110,18 +111,19 @@ async function createManyToManyData(products) {
 }
 
 async function setImage({ image, game, field = 'cover' }){
-  const response = await fetch(image);
+  const response = await fetch(`https://${image}.jpg`);
   const data = await response.arrayBuffer();
   const buffer = Buffer.from(data, "base64");
-  const FormData = require("form-data");
 
   const formData = new FormData();
   formData.append('refId', game.id);
   formData.append('red', gameService);
   formData.append('field', field);
   formData.append('files', buffer, {
-    filename: `${game.slug}.jpg` 
+    filename: `${game.slug}.jpg`
   });
+
+  console.info(`Uploading ${field} image: ${game.slug}.jpg`);
 
   await fetch(`http://localhost:1337/api/upload/`, {
     method: "POST",
@@ -135,11 +137,7 @@ async function createGames(products) {
     products.map(async (product) => {
       const item = await getByName(product.title, "game");
       
-      console.log(product);
-
       if (!item) {
-        console.info(`Creating: ${product.title}...`);
-
         const game = await strapi.service(gameService).create({
           data: {
             name: product.title,
@@ -170,10 +168,8 @@ async function createGames(products) {
           },
         });
 
-        await setImage({
-          image: product.image, 
-          game
-        })
+        await setImage({ image: product.image, game })
+
         await Promise.all(
           product.gallery.slice(0,5).map((url) => setImage({
             image: url,
