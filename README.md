@@ -55,7 +55,7 @@ Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.
 | Seção 4: (2023) Módulo 2: Criando a API para o Ecommerce (Won Games) | Status |
 |-------------------------------------------------------------------|:------:|
 | 33. Criando a primeira Collection Type - Categories               |   ✅   |
-| 34. Criando Collection Type - Platforms                           |   ❌   |
+| 34. Criando Collection Type - Platforms                           |   ✅   |
 | 35. Criando Collection Type - Developers                          |   ❌   |
 | 36. Criando Collection Type - Publishers                          |   ❌   |
 | 37. Criando Collection Type - Games                               |   ❌   |
