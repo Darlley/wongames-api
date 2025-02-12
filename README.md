@@ -1,8 +1,12 @@
+# [CURSO] React Avançado: Crie aplicações com NextJS, Strapi e mais
+Link do curso: [https://www.udemy.com/course/react-avancado/](https://www.udemy.com/course/react-avancado/)
+Autor: [Willian Justen de Vasconcellos e Guilherme Louro](https://www.udemy.com/course/react-avancado/#instructor-1)
 
+[![thumbnail](https://reactavancado.com.br/img/cover.png)](https://www.udemy.com/course/react-avancado/)
 
 | Seção 3: (2023) - Módulo 2: Iniciando com o Strapi                | Status |
 |-------------------------------------------------------------------|:------:|
-| 33. Criando a primeira Collection Type - Categories               |   ❌   |
+| 33. Criando a primeira Collection Type - Categories               |   ✅   |
 | 34. Criando Collection Type - Platforms                           |   ❌   |
 | 35. Criando Collection Type - Developers                          |   ❌   |
 | 36. Criando Collection Type - Publishers                          |   ❌   |
