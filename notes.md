@@ -46,6 +46,15 @@ Se olharmos a página do jogo no [design do figma](https://www.figma.com/design/
 
 ### 38. Entendendo e criando Relations - One to Many, Many to Many...
 
+Vamos fazer os relacionamentos entre as `collection types`. 
+Quando a gente tem varios developers para varios jogos eles tem uma relação `many to many`.
+No ADMIN do Stripe vamos adicionar o `field` chamado `relation` na `collection type` do game.
+
+- Games has and belongs to many Categories
+- Games has and belongs to many Platforms
+- Games has and belongs to many Developers
+- Publisher has many Games
+
 ### 39. Configurando o plugin de GraphQL
 
 ### 40. Instalando e utilizando um Custom Field (CKEditor - Rich Text)
