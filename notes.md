@@ -32,6 +32,18 @@ Agora vamos criar as `collection types` de Editoras. Estrutura parecida com as �
 
 ### 37. Criando Collection Type - Games
 
+Agora vamos criar as `collection types` do jogo, a principal tabela do projeto.
+
+Se olharmos a página do jogo no [design do figma](https://www.figma.com/design/xwqB4b2hX8yPmp66vRuHLz/Won-Games---Em-Andamento!!?node-id=43-1&p=f&t=y61aiUXouaIOayI2-0), ele tem
+- nome / text > small
+- short description / text > long
+- preço / number > decimal
+- cover / midia > single
+- galeria / media > multiple
+- descrição / rich text
+- classificação / enumeration
+- informações de relacionamentos
+
 ### 38. Entendendo e criando Relations - One to Many, Many to Many...
 
 ### 39. Configurando o plugin de GraphQL
