@@ -20,13 +20,15 @@ Vamos tratar o slug como se fosse nosso UID, então no field de UID damos o nome
 
 ### 34. Criando Collection Type - Platforms
 
-Agora vamos criar as `collection types` de Plataformas. É uma estrutura basicamente parecida com as de categorias (nome e slug).
+Agora vamos criar as `collection types` de Plataformas. Estrutura parecida com a últimas (nome e slug).
 
 ### 35. Criando Collection Type - Developers
 
-Agora vamos criar as `collection types` de Desenvolvedores. É uma estrutura basicamente parecida com as últimas (nome e slug).
+Agora vamos criar as `collection types` de Desenvolvedores. Estrutura parecida com as últimas (nome e slug).
 
 ### 36. Criando Collection Type - Publishers
+
+Agora vamos criar as `collection types` de Editoras. Estrutura parecida com as últimas (nome e slug).
 
 ### 37. Criando Collection Type - Games
 
