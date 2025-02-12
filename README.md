@@ -41,6 +41,8 @@ Inicio: 10/02/2025
 | 26. Criando um workflow de CI com o GitHub Actions           |   ✅   |
 | 27. Iniciando um projeto através do nosso boilerplate        |   ✅   |
 
+Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.com/Darlley/react-avancado)
+
 | Seção 3: (2023) - Módulo 2: Iniciando com o Strapi   | Status |
 |------------------------------------------------------|:------:|
 | 28. Strapi por debaixo dos panos                    |   ✅   |
