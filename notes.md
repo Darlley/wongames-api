@@ -24,6 +24,8 @@ Agora vamos criar as `collection types` de Plataformas. É uma estrutura basicam
 
 ### 35. Criando Collection Type - Developers
 
+Agora vamos criar as `collection types` de Desenvolvedores. É uma estrutura basicamente parecida com as últimas (nome e slug).
+
 ### 36. Criando Collection Type - Publishers
 
 ### 37. Criando Collection Type - Games

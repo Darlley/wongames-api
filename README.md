@@ -43,22 +43,22 @@ Inicio: 10/02/2025
 
 Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.com/Darlley/react-avancado)
 
-| Seção 3: (2023) - Módulo 2: Iniciando com o Strapi   | Status |
-|------------------------------------------------------|:------:|
-| 28. Strapi por debaixo dos panos                    |   ✅   |
-| 29. Requisitos para o Strapi                        |   ✅   |
-| 30. Comandos do PostgreSQL                          |   ✅   |
-| 31. Iniciando o Strapi local                        |   ✅   |
-| 32. Apresentando o projeto da Won Games            |   ✅   |
+| Seção 3: (2023) - Módulo 2: Iniciando com o Strapi    | Status |
+|------------------------------------------------------ |:------:|
+| 28. Strapi por debaixo dos panos                      |   ✅   |
+| 29. Requisitos para o Strapi                          |   ✅   |
+| 30. Comandos do PostgreSQL                            |   ✅   |
+| 31. Iniciando o Strapi local                          |   ✅   |
+| 32. Apresentando o projeto da Won Games               |   ✅   |
 
 
-| Seção 4: (2023) Módulo 2: Criando a API para o Ecommerce (Won Games) | Status |
-|-------------------------------------------------------------------|:------:|
-| 33. Criando a primeira Collection Type - Categories               |   ✅   |
-| 34. Criando Collection Type - Platforms                           |   ✅   |
-| 35. Criando Collection Type - Developers                          |   ❌   |
-| 36. Criando Collection Type - Publishers                          |   ❌   |
-| 37. Criando Collection Type - Games                               |   ❌   |
-| 38. Entendendo e criando Relations - One to Many, Many to Many... |   ❌   |
-| 39. Configurando o plugin de GraphQL                              |   ❌   |
-| 40. Instalando e utilizando um Custom Field (CKEditor - Rich Text)|   ❌   |
+| Seção 4: (2023) Módulo 2: Criando a API para o Ecommerce (Won Games)  | Status |
+|-----------------------------------------------------------------------|:------:|
+| 33. Criando a primeira Collection Type - Categories                   |   ✅   |
+| 34. Criando Collection Type - Platforms                               |   ✅   |
+| 35. Criando Collection Type - Developers                              |   ✅   |
+| 36. Criando Collection Type - Publishers                              |   ❌   |
+| 37. Criando Collection Type - Games                                   |   ❌   |
+| 38. Entendendo e criando Relations - One to Many, Many to Many...     |   ❌   |
+| 39. Configurando o plugin de GraphQL                                  |   ❌   |
+| 40. Instalando e utilizando um Custom Field (CKEditor - Rich Text)    |   ❌   |
