@@ -57,4 +57,25 @@ No ADMIN do Stripe vamos adicionar o `field` chamado `relation` na `collection t
 
 ### 39. Configurando o plugin de GraphQL
 
+- Crie um categoria para teste 
+- Vá em `Settings > Roles (Users & Permissions plugin) > Public`
+- Marque `find` e `findOne` na categoria
+
+Agora você tem uma Rest API de categorias em [http://localhost:1337/api/categories](http://localhost:1337/api/categories)
+
+Mas como ja foi dito na aula anterior, vamos trabalhar com GraphQL.
+
+- Vá em `Marketplace` e procure por "GraphQL" e instale a dependencia no projeto.
+
+Agora você tem disponível o endpoint [http://localhost:1337/graphql](http://localhost:1337/graphql):
+
+```
+{
+  categories {
+    name,
+    slug
+  }
+}
+```
+
 ### 40. Instalando e utilizando um Custom Field (CKEditor - Rich Text)
