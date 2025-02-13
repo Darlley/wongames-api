@@ -51,7 +51,6 @@ Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.
 | 31. Iniciando o Strapi local                          |   ✅   |
 | 32. Apresentando o projeto da Won Games               |   ✅   |
 
-
 | Seção 4: (2023) Módulo 2: Criando a API para o Ecommerce (Won Games)  | Status |
 |-----------------------------------------------------------------------|:------:|
 | 33. Criando a primeira Collection Type - Categories                   |   ✅   |
@@ -62,3 +61,11 @@ Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.
 | 38. Entendendo e criando Relations - One to Many, Many to Many...     |   ✅   |
 | 39. Configurando o plugin de GraphQL                                  |   ✅   |
 | 40. Instalando e utilizando um Custom Field (CKEditor - Rich Text)    |   ✅   |
+
+| Seção 5: (2023) Módulo 2: Customizando o Strapi           | Status |
+|-----------------------------------------------------------|:------:|
+| 41. Customizando Logo e Favicon                           |   ✅   |
+| 42. Customizando textos no Login e Admin                  |   ✅   |
+| 43. Customizando as cores (theme)                         |   ✅   |
+| 44. Customizando a Home com patch-package                 |   ❌   |
+| 45. Removendo videos tutoriais e notificações de update   |   ❌   |
