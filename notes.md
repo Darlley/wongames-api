@@ -85,3 +85,87 @@ Nas versões v3 e v4 do Strapi o rich editor padrão dele parecia mais um editor
 - Siga o passo a passo da instalação
 - Não se esqueça de fazer o build (`npm run build`)
 - Substitua os filds que usam o rich text pelo CKEditor `Fields > Custom > CKEditor`
+
+## Seção 5: (2023) Módulo 2: Customizando o Strapi
+
+Documentação do Strapi para as customizações do painel: [https://docs.strapi.io/dev-docs/admin-panel-customization/options](https://docs.strapi.io/dev-docs/admin-panel-customization/options)
+
+### 41. Customizando Logo e Favicon 
+
+- Crie uma pasta `extensions` em `src/admin/extensions` com todas as suas imagens.
+- Renomeie o arquivo `app.example.tsx` para `app.tsx` e adicione as imagens:
+
+```ts
+import Icon from './extensions/icon.png';
+import favicon from "./extensions/favicon.png";
+import Logo from './extensions/logo.svg';
+
+export default {
+  config: {
+    auth: {
+      logo: Logo,
+    },
+    head: {
+      favicon: favicon,
+    },
+    menu: {
+      logo: Icon,
+    },
+  }
+}
+```
+
+- Faça o build e reinicie o projeto.
+
+### 42. Customizando textos no Login e Admin
+
+```ts
+export default {
+  translations: {
+    en: {
+      "Auth.form.welcome.title": "Welcome to Won Games!",
+      "Auth.form.welcome.subtitle": "Log in to your account",
+      "app.components.LeftMenu.navbrand.title": "Won Games Dashboard",
+    },
+    'pt-BR': {
+      "Auth.form.welcome.title": "Bem vindo ao Won Games!",
+      "Auth.form.welcome.subtitle": "Faça login em sua conta",
+      "app.components.LeftMenu.navbrand.title": "Won Games Dashboard",
+    },
+  },
+}
+```
+
+### 43. Customizando as cores (theme)
+
+```ts
+export default {
+theme: {
+  light: {
+    colors: {
+      primary100: '#dde6fe',
+      primary200: '#6d94f9',
+      primary500: '#1e5af5',
+      primary600: '#1a4dd0',
+      primary700: '#1642b3',
+      danger700: '#b72b1a',
+      buttonPrimary500: '#f231a5',
+      buttonPrimary600: '#f231a5',
+    },
+  },
+  dark: {
+    colors: {
+      primary100: "#030415",
+      primary600: "#f231a5",
+      primary700: "#f231a5",
+      neutral0: "#0d102f",
+      neutral100: "#030415",
+      buttonPrimary500: '#f231a5',
+      buttonPrimary600: '#f231a5'
+    },
+  },
+},
+}
+```
+
+### 44. Customizando a Home com patch-package
