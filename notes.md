@@ -169,3 +169,11 @@ theme: {
 ```
 
 ### 44. Customizando a Home com patch-package
+
+Para customizar a home do painel podemos usar a biblioteca [patch-package](https://www.npmjs.com/package/patch-package).
+
+Toda vez que instalamos uma dependencia ela fica no `node_modules`, inclusive o Strapi, e é la onde estava o código do painel até as versões anteriores a v4.12. Você podia até alterar diretamente o layout, mas sempre que a biblioteca é atualizada ou reinstalada todas as modificações se perdem. 
+
+Para persistir isso que criaram a biblioteca `patch-package`. Mas atualmente nas versões v4.15 em diante o Strapi está pre complilando o pacote, e esta estratégia não da mais certo.
+
+Na versão v5 do Strapi não precisamos fazer as alterações do curso por que o Strapi ja retirou as informações de branding deles e deixou a home mais clean.

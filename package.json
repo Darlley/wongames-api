@@ -8,7 +8,8 @@
     "deploy": "strapi deploy",
     "develop": "strapi develop",
     "start": "strapi start",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@ckeditor/strapi-plugin-ckeditor": "^1.1.0",
@@ -16,6 +17,7 @@
     "@strapi/plugin-graphql": "^5.10.0",
     "@strapi/plugin-users-permissions": "5.9.0",
     "@strapi/strapi": "5.9.0",
+    "patch-package": "^8.0.0",
     "pg": "8.8.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
