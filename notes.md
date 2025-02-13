@@ -177,3 +177,11 @@ Toda vez que instalamos uma dependencia ela fica no `node_modules`, inclusive o 
 Para persistir isso que criaram a biblioteca `patch-package`. Mas atualmente nas versões v4.15 em diante o Strapi está pre complilando o pacote, e esta estratégia não da mais certo.
 
 Na versão v5 do Strapi não precisamos fazer as alterações do curso por que o Strapi ja retirou as informações de branding deles e deixou a home mais clean.
+
+### 46. Explicando sobre o scrapper e a gog.com
+
+Para preencher as informações (CMS) das collection-types que criamos podemos escrever manualmente, como em qualquer aplicação web, mas vamos criar um web scrapping em node para que o algoritmo execute em uma página externa e extraina os dados que precisamos e preencha sozinha os campos que criamos. Em outras palavras esta seção pode ser pulada, crie dados de testes e avance para a próxima seção, esta poderia até ser a última.
+
+O back-end do Strapi executa um servidor HTTP baseado no framework JavaScript [Koa](https://koajs.com/). Então, para fazer o nosso scrapping precisamos customizar o back-end do Strapi. [https://docs.strapi.io/dev-docs/backend-customization](https://docs.strapi.io/dev-docs/backend-customization)
+
+`Request > Middleware > Route > Route Polices (autenticação) > Controller and Service (optional) > Models - Entity and Query Engine > Response`
