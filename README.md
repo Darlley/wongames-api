@@ -75,15 +75,15 @@ Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.
 | 46. Explicando sobre o scrapper e a gog.com                                         |   ✅   |
 | 47. Explicando como o backend do Strapi funciona                                    |   ✅   |
 | 48. Criando route e controller simples                                              |   ✅   |
-| 49. Entendendo o ctx (contexto de response/request do Koa)                          |   ✅   |
-| 50. Entendendo conceitos de Service e criando um simples                            |   ✅   |
-| 51. Fazendo fetch nos dados da API da GoG                                           |   ✅   |
-| 52. Fazendo scrapper dos dados de uma página com JSDOM                              |   ✅   |
-| 53. Criando dados com service create                                                |   ✅   |
-| 54. Buscando dados já criados e evitando erros de duplicação                        |   ✅   |
-| 55. Criando dados relacionais de Many to Many                                       |   ✅   |
-| 56. Criando a primeira estrutura dos jogos                                          |   ✅   |
-| 57. Fazendo upload de imagens com Form Data                                         |   ✅   |
-| 58. Fazendo tratamento de erros                                                     |   ✅   |
-| 59. Customizando nossa chamada a API com query params                               |   ✅   |
-| 60. Populando os dados e liberando/fechando rotas públicas                          |   ✅   |
+| 49. Entendendo o ctx (contexto de response/request do Koa)                          |   ❌   |
+| 50. Entendendo conceitos de Service e criando um simples                            |   ❌   |
+| 51. Fazendo fetch nos dados da API da GoG                                           |   ❌   |
+| 52. Fazendo scrapper dos dados de uma página com JSDOM                              |   ❌   |
+| 53. Criando dados com service create                                                |   ❌   |
+| 54. Buscando dados já criados e evitando erros de duplicação                        |   ❌   |
+| 55. Criando dados relacionais de Many to Many                                       |   ❌   |
+| 56. Criando a primeira estrutura dos jogos                                          |   ❌   |
+| 57. Fazendo upload de imagens com Form Data                                         |   ❌   |
+| 58. Fazendo tratamento de erros                                                     |   ❌   |
+| 59. Customizando nossa chamada a API com query params                               |   ❌   |
+| 60. Populando os dados e liberando/fechando rotas públicas                          |   ❌   |

@@ -182,6 +182,74 @@ Na versão v5 do Strapi não precisamos fazer as alterações do curso por que o
 
 Para preencher as informações (CMS) das collection-types que criamos podemos escrever manualmente, como em qualquer aplicação web, mas vamos criar um web scrapping em node para que o algoritmo execute em uma página externa e extraina os dados que precisamos e preencha sozinha os campos que criamos. Em outras palavras esta seção pode ser pulada, crie dados de testes e avance para a próxima seção, esta poderia até ser a última.
 
+### 47. Explicando como o backend do Strapi funciona
+
 O back-end do Strapi executa um servidor HTTP baseado no framework JavaScript [Koa](https://koajs.com/). Então, para fazer o nosso scrapping precisamos customizar o back-end do Strapi. [https://docs.strapi.io/dev-docs/backend-customization](https://docs.strapi.io/dev-docs/backend-customization)
 
 `Request > Middleware > Route > Route Polices (autenticação) > Controller and Service (optional) > Models - Entity and Query Engine > Response`
+
+### 48. Criando route e controller simples
+
+Vamos criar uma rota simples para entener o fluxo de customização do Strapi.
+
+- src/api/game/routes
+
+Na documentação tem um exemplo de como criar uma rota [https://docs.strapi.io/dev-docs/backend-customization/routes](https://docs.strapi.io/dev-docs/backend-customization/routes).
+
+[![image](https://docs.strapi.io/img/assets/backend-customization/diagram-routes.png)](https://docs.strapi.io/dev-docs/backend-customization/routes)
+
+Exemplo: 
+
+```ts
+export default {
+  routes: [
+    { // Path defined with a URL parameter
+      method: 'GET',
+      path: '/restaurants/:category/:id',
+      handler: 'Restaurant.findOneByCategory',
+    },
+    { // Path defined with a regular expression
+      method: 'GET',
+      path: '/restaurants/:region(\\d{2}|\\d{3})/:id', // Only match when the first parameter contains 2 or 3 digits.
+      handler: 'Restaurant.findOneByRegion',
+    }
+  ]
+}
+```
+
+- Crie um novo arquivo `populate` em `src/api/game/routes/populate.ts`
+
+```ts
+export default {
+  routes: [
+    {
+      method: 'POST',
+      path: '/game/populate',
+      handler: 'game.populate' 
+    }
+  ]
+}
+```
+
+- Crie o método populate no controller em `src/api/game/controllers/game.ts`:
+
+```ts
+export default factories.createCoreController('api::game.game', ({strapi}) => ({
+  async populate (ctx) {
+    console.log(":::RODANDO NO SERVIDOR:::")
+    ctx.send(":::FINALIZADO NO CLIENT:::")
+  }
+}));
+```
+
+
+Para executar pode usar o Insomnia, Postman, HTTPie ou simplesmente o CURL:
+
+```bash
+curl -X POST http://localhost:1337/api/game/populate
+```
+
+> [!NOTE]
+> 1. Altere as permissões no ADMIN do Strapi.
+> Settings > Roles (Users & Permissions Plugin) > Public > Game > Populate
+> 2. Veja os consoles no terminal.
