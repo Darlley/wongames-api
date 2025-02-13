@@ -79,3 +79,9 @@ Agora você tem disponível o endpoint [http://localhost:1337/graphql](http://lo
 ```
 
 ### 40. Instalando e utilizando um Custom Field (CKEditor - Rich Text)
+
+Nas versões v3 e v4 do Strapi o rich editor padrão dele parecia mais um editor markdown. Uma alternativa mais rica era o plugin CKEditor que era mais completo. Mas na vesão v5 do Strapi o rich editor padrão dele parece mais moderno. Mas o CKEditor ainda suporta mais opções como imagens, AI Assistant, tabelas, etc.
+
+- Siga o passo a passo da instalação
+- Não se esqueça de fazer o build (`npm run build`)
+- Substitua os filds que usam o rich text pelo CKEditor `Fields > Custom > CKEditor`

@@ -451,7 +451,15 @@ export interface ApiGameGame extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Blocks;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDA3MDA3OTksImp0aSI6ImQ2YzI2YjE2LWJmZTUtNDMwYy1iNWEzLWI0ZjU2NzcxMjk3ZiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjM2ZWJjN2MyIn0.zcT3IBhiOiDtEoscTZ7BUIB1KLFlpFpONp7YCKjq3TS0wUA2NpqutsDEU7KvQFLLkxiPQF7bf0hLZh84jI-zfw';
+          output: 'HTML';
+          preset: 'rich';
+        }
+      >;
     developers: Schema.Attribute.Relation<
       'manyToMany',
       'api::developer.developer'
