@@ -67,5 +67,5 @@ Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.
 | 41. Customizando Logo e Favicon                           |   ✅   |
 | 42. Customizando textos no Login e Admin                  |   ✅   |
 | 43. Customizando as cores (theme)                         |   ✅   |
-| 44. Customizando a Home com patch-package                 |   ❌   |
-| 45. Removendo videos tutoriais e notificações de update   |   ❌   |
+| 44. Customizando a Home com patch-package                 |   ✅   |
+| 45. Removendo videos tutoriais e notificações de update   |   ✅   |
