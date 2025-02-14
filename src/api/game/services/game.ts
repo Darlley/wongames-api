@@ -7,6 +7,12 @@ import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import slugify from 'slugify';
 
+const gameService = 'api::game.game';
+const publisherService = 'api::publisher.publisher';
+const developerService = 'api::developer.developer';
+const categoryService = 'api::category.category';
+const platformService = 'api::platform.platform';
+
 async function getGameInfo(slug: string) {
   try {
     const gogSlug = slug.replace('-', '_').toLowerCase();
@@ -103,7 +109,28 @@ async function getGameInfo(slug: string) {
   }
 }
 
-async function create() {}
+async function getByName(name, entityService) {
+  const item = await strapi
+    .service(`api::${entityService}.${entityService}`)
+    .find({
+      filters: { name },
+    });
+
+  return item.results.length > 0 ? item.results[0] : null;
+}
+
+async function create(name, entityService) {
+  const item = await getByName(name, entityService);
+
+  if (!item) {
+    await strapi.service(`api::${entityService}.${entityService}`).create({
+      data: {
+        name,
+        slug: slugify(name, { strict: true, lower: true }),
+      },
+    });
+  }
+}
 
 export default factories.createCoreService('api::game.game', () => ({
   async populate(params) {
@@ -111,11 +138,27 @@ export default factories.createCoreService('api::game.game', () => ({
       const gogApiUrl =
         'https://catalog.gog.com/v1/catalog?limit=48&order=desc';
 
-      const { data: { products } }: {
+      const {
+        data: { products },
+      }: {
         data: DataType;
       } = await axios.get(gogApiUrl);
 
-      console.log(await getGameInfo(products[0].slug));
+      console.log(products[1]);
+
+      // console.log(await getGameInfo(products[0].slug));
+      
+      products[2].developers.map(async (developer) => {
+        await create(developer, 'developer')
+      });
+      
+      products[2].publishers.map(async (publisher) => {
+        await create(publisher, 'publisher')
+      });
+      
+      products[2].genres.map(async ({ name }) => {
+        await create(name, 'category')
+      });
     } catch (error) {
       console.error('Erro ao popular jogos:', error);
       throw error;
