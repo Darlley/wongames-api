@@ -19,27 +19,27 @@ Inicio: 10/02/2025
 | 7. Introdução ao CSS-in-JS                             |   ✅   |
 | 8. Introdução a Testes de Software                     |   ✅   |
 
-| Seção 2: (2023) - Módulo 1: Criando nosso Boilerplate do NextJS | Status |
-|---------------------------------------------------------------|:------:|
-| 9. Nova forma do Next com Apps Router                        |   ✅   |
-| 10. Criando o boilerplate com create-next-app                |   ✅   |
-| 11. Configurando o .editorconfig                             |   ✅   |
-| 12. Configurando o Eslint                                    |   ✅   |
-| 13. Configurando o Prettier com o Eslint                     |   ✅   |
-| 14. Configurando um git hook com Husky e Lint-Staged         |   ✅   |
-| 15. Instalando e configurando o Jest                         |   ✅   |
-| 16. Configurando React Testing Library                       |   ✅   |
-| 17. Escrevendo primeiros testes e configurando o hook para testes |   ✅   |
-| 18. (Opcional) Remoção do Tailwind                           |   ✅   |
-| 19. Configurando styled-components no Apps Router            |   ✅   |
-| 20. Criando estilos globais com createGlobalStyle            |   ✅   |
-| 21. Melhorando snapshots com Jest-styled-components          |   ✅   |
-| 22. Configurando o Storybook                                 |   ✅   |
+| Seção 2: (2023) - Módulo 1: Criando nosso Boilerplate do NextJS     | Status |
+|---------------------------------------------------------------------|:------:|
+| 9. Nova forma do Next com Apps Router                               |   ✅   |
+| 10. Criando o boilerplate com create-next-app                       |   ✅   |
+| 11. Configurando o .editorconfig                                    |   ✅   |
+| 12. Configurando o Eslint                                           |   ✅   |
+| 13. Configurando o Prettier com o Eslint                            |   ✅   |
+| 14. Configurando um git hook com Husky e Lint-Staged                |   ✅   |
+| 15. Instalando e configurando o Jest                                |   ✅   |
+| 16. Configurando React Testing Library                              |   ✅   |
+| 17. Escrevendo primeiros testes e configurando o hook para testes   |   ✅   |
+| 18. (Opcional) Remoção do Tailwind                                  |   ✅   |
+| 19. Configurando styled-components no Apps Router                   |   ✅   |
+| 20. Criando estilos globais com createGlobalStyle                   |   ✅   |
+| 21. Melhorando snapshots com Jest-styled-components                 |   ✅   |
+| 22. Configurando o Storybook                                        |   ✅   |
 | 23. Criando primeiro Story e configurando o GlobalStyles no Preview |   ✅   |
-| 24. Utilizando Controls do Storybook e gerando um build estático |   ✅   |
-| 25. Automatizando criação de arquivos com Plop               |   ✅   |
-| 26. Criando um workflow de CI com o GitHub Actions           |   ✅   |
-| 27. Iniciando um projeto através do nosso boilerplate        |   ✅   |
+| 24. Utilizando Controls do Storybook e gerando um build estático    |   ✅   |
+| 25. Automatizando criação de arquivos com Plop                      |   ✅   |
+| 26. Criando um workflow de CI com o GitHub Actions                  |   ✅   |
+| 27. Iniciando um projeto através do nosso boilerplate               |   ✅   |
 
 Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.com/Darlley/react-avancado)
 
@@ -62,10 +62,28 @@ Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.
 | 39. Configurando o plugin de GraphQL                                  |   ✅   |
 | 40. Instalando e utilizando um Custom Field (CKEditor - Rich Text)    |   ✅   |
 
-| Seção 5: (2023) Módulo 2: Customizando o Strapi           | Status |
-|-----------------------------------------------------------|:------:|
-| 41. Customizando Logo e Favicon                           |   ✅   |
-| 42. Customizando textos no Login e Admin                  |   ✅   |
-| 43. Customizando as cores (theme)                         |   ✅   |
-| 44. Customizando a Home com patch-package                 |   ✅   |
-| 45. Removendo videos tutoriais e notificações de update   |   ✅   |
+| Seção 5: (2023) Módulo 2: Customizando o Strapi         | Status |
+|---------------------------------------------------------|:------:|
+| 41. Customizando Logo e Favicon                         |   ✅   |
+| 42. Customizando textos no Login e Admin                |   ✅   |
+| 43. Customizando as cores (theme)                       |   ✅   |
+| 44. Customizando a Home com patch-package               |   ✅   |
+| 45. Removendo videos tutoriais e notificações de update |   ✅   |
+
+| Seção 6: (2023) Módulo 2: Criando Scrapper de dados para popular a API da Won Games | Status |
+|-------------------------------------------------------------------------------------|:------:|
+| 46. Explicando sobre o scrapper e a gog.com                                         |   ✅   |
+| 47. Explicando como o backend do Strapi funciona                                    |   ✅   |
+| 48. Criando route e controller simples                                              |   ✅   |
+| 49. Entendendo o ctx (contexto de response/request do Koa)                          |   ✅   |
+| 50. Entendendo conceitos de Service e criando um simples                            |   ❌   |
+| 51. Fazendo fetch nos dados da API da GoG                                           |   ❌   |
+| 52. Fazendo scrapper dos dados de uma página com JSDOM                              |   ❌   |
+| 53. Criando dados com service create                                                |   ❌   |
+| 54. Buscando dados já criados e evitando erros de duplicação                        |   ❌   |
+| 55. Criando dados relacionais de Many to Many                                       |   ❌   |
+| 56. Criando a primeira estrutura dos jogos                                          |   ❌   |
+| 57. Fazendo upload de imagens com Form Data                                         |   ❌   |
+| 58. Fazendo tratamento de erros                                                     |   ❌   |
+| 59. Customizando nossa chamada a API com query params                               |   ❌   |
+| 60. Populando os dados e liberando/fechando rotas públicas                          |   ❌   |

@@ -177,3 +177,106 @@ Toda vez que instalamos uma dependencia ela fica no `node_modules`, inclusive o 
 Para persistir isso que criaram a biblioteca `patch-package`. Mas atualmente nas versões v4.15 em diante o Strapi está pre complilando o pacote, e esta estratégia não da mais certo.
 
 Na versão v5 do Strapi não precisamos fazer as alterações do curso por que o Strapi ja retirou as informações de branding deles e deixou a home mais clean.
+
+
+## Seção 6: (2023) Módulo 2: Criando Scrapper de dados para popular a API da Won Games
+
+### 46. Explicando sobre o scrapper e a gog.com
+
+Para preencher as informações (CMS) das collection-types que criamos podemos escrever manualmente, como em qualquer aplicação web, mas vamos criar um web scrapping em node para que o algoritmo execute em uma página externa e extraina os dados que precisamos e preencha sozinha os campos que criamos. Em outras palavras esta seção pode ser pulada, crie dados de testes e avance para a próxima seção, esta poderia até ser a última.
+
+### 47. Explicando como o backend do Strapi funciona
+
+O back-end do Strapi executa um servidor HTTP baseado no framework JavaScript [Koa](https://koajs.com/). Então, para fazer o nosso scrapping precisamos customizar o back-end do Strapi. [https://docs.strapi.io/dev-docs/backend-customization](https://docs.strapi.io/dev-docs/backend-customization)
+
+`Request > Middleware > Route > Route Polices (autenticação) > Controller and Service (optional) > Models - Entity and Query Engine > Response`
+
+### 48. Criando route e controller simples
+
+Vamos criar uma rota simples para entener o fluxo de customização do Strapi.
+
+- src/api/game/routes
+
+Na documentação tem um exemplo de como criar uma rota [https://docs.strapi.io/dev-docs/backend-customization/routes](https://docs.strapi.io/dev-docs/backend-customization/routes).
+
+[![image](https://docs.strapi.io/img/assets/backend-customization/diagram-routes.png)](https://docs.strapi.io/dev-docs/backend-customization/routes)
+
+Exemplo: 
+
+```ts
+export default {
+  routes: [
+    { // Path defined with a URL parameter
+      method: 'GET',
+      path: '/restaurants/:category/:id',
+      handler: 'Restaurant.findOneByCategory',
+    },
+    { // Path defined with a regular expression
+      method: 'GET',
+      path: '/restaurants/:region(\\d{2}|\\d{3})/:id', // Only match when the first parameter contains 2 or 3 digits.
+      handler: 'Restaurant.findOneByRegion',
+    }
+  ]
+}
+```
+
+- Crie um novo arquivo `populate` em `src/api/game/routes/populate.ts`
+
+```ts
+export default {
+  routes: [
+    {
+      method: 'POST',
+      path: '/game/populate',
+      handler: 'game.populate' 
+    }
+  ]
+}
+```
+
+- Crie o método populate no controller em `src/api/game/controllers/game.ts`:
+
+```ts
+export default factories.createCoreController('api::game.game', ({strapi}) => ({
+  async populate (ctx) {
+    console.log(":::RODANDO NO SERVIDOR:::")
+    ctx.send(":::FINALIZADO NO CLIENT:::")
+  }
+}));
+```
+
+
+Para executar pode usar o Insomnia, Postman, HTTPie pelo CURL:
+
+```bash
+curl -X POST http://localhost:1337/api/game/populate
+```
+
+Ou simplesmente pela extensão `REST CLient` (ID: humao.rest-client), basta instalar e executar o arquivo `example.http`.
+
+> [!NOTE]
+> 1. Altere as permissões no ADMIN do Strapi.
+> Settings > Roles (Users & Permissions Plugin) > Public > Game > Populate
+> 2. Veja os consoles no terminal.
+
+### 49. Entendendo o ctx (contexto de response/request do Koa)
+
+No Strapi temos dois contextos, um no Request e outro no Response: [https://docs.strapi.io/dev-docs/backend-customization/requests-responses](https://docs.strapi.io/dev-docs/backend-customization/requests-responses)
+
+[![image](https://docs.strapi.io/img/assets/backend-customization/diagram-requests-responses.png)]https://docs.strapi.io/dev-docs/backend-customization/requests-responses)
+
+Todas as propriedade que temos no contexto podem ser consultadas na documentação do [koajs](https://koajs.com/#context)
+
+Para buscar as informações da API gog temos que usar `Query Params` para filtrar e pesquisar por resultados. O nos interessa no objeto ctx é é a propriedade `ctx.query´
+
+### 50. Entendendo conceitos de Service e criando um simples
+
+```ts
+async populate(params) {
+  console.log(await strapi.service("api::category.category").find({
+    filters: { name: params.category }
+  }))
+}
+```
+
+### 50. Entendendo conceitos de Service e criando um simples
