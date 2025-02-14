@@ -117,8 +117,7 @@ async function getGameInfo(slug: string) {
 
 async function getByName(name, entityService) {
   try {
-    const item = await strapi
-      .service(entityService)
+    const item = await strapi.service(entityService)
       .find({
         filters: { name },
       });
@@ -290,9 +289,9 @@ export default factories.createCoreService(gameService, () => ({
         data: DataType;
       } = await axios.get(gogApiUrl);
 
-      await createManyToManyData(products[1])
-      await createGames(products[1])
-      
+      await createManyToManyData(products)
+      await createGames(products)
+
     } catch (error) {
       console.error('Erro ao popular jogos:', Exception(error));
       throw error;
