@@ -6,6 +6,7 @@ import { factories } from '@strapi/strapi';
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import slugify from 'slugify';
+import qs from 'qs';
 
 const gameService = "api::game.game";
 const publisherService = "api::publisher.publisher";
@@ -280,8 +281,8 @@ async function createGames(products) {
 export default factories.createCoreService(gameService, () => ({
   async populate(params) {
     try {
-      const gogApiUrl =
-        'https://catalog.gog.com/v1/catalog?limit=48&order=desc';
+      // const gogApiUrl = 'https://catalog.gog.com/v1/catalog?limit=48&order=desc';
+      const gogApiUrl = `https://catalog.gog.com/v1/catalog?${qs.stringify(params)}`;
 
       const {
         data: { products },
@@ -289,8 +290,9 @@ export default factories.createCoreService(gameService, () => ({
         data: DataType;
       } = await axios.get(gogApiUrl);
 
-      await createManyToManyData(products)
-      await createGames(products)
+      await createManyToManyData(products[1])
+      await createGames(products[1])
+      
     } catch (error) {
       console.error('Erro ao popular jogos:', Exception(error));
       throw error;
