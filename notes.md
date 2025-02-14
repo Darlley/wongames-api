@@ -178,6 +178,9 @@ Para persistir isso que criaram a biblioteca `patch-package`. Mas atualmente nas
 
 Na versão v5 do Strapi não precisamos fazer as alterações do curso por que o Strapi ja retirou as informações de branding deles e deixou a home mais clean.
 
+
+## Seção 6: (2023) Módulo 2: Criando Scrapper de dados para popular a API da Won Games
+
 ### 46. Explicando sobre o scrapper e a gog.com
 
 Para preencher as informações (CMS) das collection-types que criamos podemos escrever manualmente, como em qualquer aplicação web, mas vamos criar um web scrapping em node para que o algoritmo execute em uma página externa e extraina os dados que precisamos e preencha sozinha os campos que criamos. Em outras palavras esta seção pode ser pulada, crie dados de testes e avance para a próxima seção, esta poderia até ser a última.
@@ -243,13 +246,37 @@ export default factories.createCoreController('api::game.game', ({strapi}) => ({
 ```
 
 
-Para executar pode usar o Insomnia, Postman, HTTPie ou simplesmente o CURL:
+Para executar pode usar o Insomnia, Postman, HTTPie pelo CURL:
 
 ```bash
 curl -X POST http://localhost:1337/api/game/populate
 ```
 
+Ou simplesmente pela extensão `REST CLient` (ID: humao.rest-client), basta instalar e executar o arquivo `example.http`.
+
 > [!NOTE]
 > 1. Altere as permissões no ADMIN do Strapi.
 > Settings > Roles (Users & Permissions Plugin) > Public > Game > Populate
 > 2. Veja os consoles no terminal.
+
+### 49. Entendendo o ctx (contexto de response/request do Koa)
+
+No Strapi temos dois contextos, um no Request e outro no Response: [https://docs.strapi.io/dev-docs/backend-customization/requests-responses](https://docs.strapi.io/dev-docs/backend-customization/requests-responses)
+
+[![image](https://docs.strapi.io/img/assets/backend-customization/diagram-requests-responses.png)]https://docs.strapi.io/dev-docs/backend-customization/requests-responses)
+
+Todas as propriedade que temos no contexto podem ser consultadas na documentação do [koajs](https://koajs.com/#context)
+
+Para buscar as informações da API gog temos que usar `Query Params` para filtrar e pesquisar por resultados. O nos interessa no objeto ctx é é a propriedade `ctx.query´
+
+### 50. Entendendo conceitos de Service e criando um simples
+
+```ts
+async populate(params) {
+  console.log(await strapi.service("api::category.category").find({
+    filters: { name: params.category }
+  }))
+}
+```
+
+### 50. Entendendo conceitos de Service e criando um simples

@@ -75,7 +75,7 @@ Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.
 | 46. Explicando sobre o scrapper e a gog.com                                         |   ✅   |
 | 47. Explicando como o backend do Strapi funciona                                    |   ✅   |
 | 48. Criando route e controller simples                                              |   ✅   |
-| 49. Entendendo o ctx (contexto de response/request do Koa)                          |   ❌   |
+| 49. Entendendo o ctx (contexto de response/request do Koa)                          |   ✅   |
 | 50. Entendendo conceitos de Service e criando um simples                            |   ❌   |
 | 51. Fazendo fetch nos dados da API da GoG                                           |   ❌   |
 | 52. Fazendo scrapper dos dados de uma página com JSDOM                              |   ❌   |
