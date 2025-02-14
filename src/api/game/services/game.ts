@@ -13,6 +13,12 @@ const developerService = "api::developer.developer";
 const categoryService = "api::category.category";
 const platformService = "api::platform.platform";
 
+interface CustomError extends Error {}
+
+function Exception(e) {
+  return { e, data: e.data && e.data.errors }
+}
+
 async function getGameInfo(slug: string) {
   try {
     const gogSlug = slug.replace('-', '_').toLowerCase();
@@ -104,31 +110,40 @@ async function getGameInfo(slug: string) {
         : 'BR0',
     };
   } catch (error) {
-    console.error('Erro ao extrair texto:', error);
-    return {};
+    console.error('getGameInfo:', Exception(error));
   }
 }
 
 async function getByName(name, entityService) {
-  const item = await strapi
-    .service(entityService)
-    .find({
-      filters: { name },
-    });
-
-  return item.results.length > 0 ? item.results[0] : null;
+  try {
+    const item = await strapi
+      .service(entityService)
+      .find({
+        filters: { name },
+      });
+  
+    return item.results.length > 0 ? item.results[0] : null;
+    
+  } catch (error) {
+    console.error('getByName:', Exception(error));
+  }
 }
 
 async function create(name, entityService) {
-  const item = await getByName(name, entityService);
-
-  if (!item) {
-    await strapi.service(entityService).create({
-      data: {
-        name,
-        slug: slugify(name, { strict: true, lower: true }),
-      },
-    });
+  try {
+    const item = await getByName(name, entityService);
+  
+    if (!item) {
+      await strapi.service(entityService).create({
+        data: {
+          name,
+          slug: slugify(name, { strict: true, lower: true }),
+        },
+      });
+    }
+    
+  } catch (error) {
+    console.error('create:', Exception(error));
   }
 }
 
@@ -200,7 +215,7 @@ async function setImage({ image, game, field = "cover" }) {
       },
     });
   } catch (error) {
-    console.log("setImage:", error);
+    console.log("setImage:", Exception(error));
   }
 }
 
@@ -274,11 +289,10 @@ export default factories.createCoreService(gameService, () => ({
         data: DataType;
       } = await axios.get(gogApiUrl);
 
-      await createManyToManyData([products[0], products[1]])
-      await createGames([products[0], products[1]])
-
+      await createManyToManyData(products)
+      await createGames(products)
     } catch (error) {
-      console.error('Erro ao popular jogos:', error);
+      console.error('Erro ao popular jogos:', Exception(error));
       throw error;
     }
   },
