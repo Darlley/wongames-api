@@ -78,6 +78,11 @@ Agora você tem disponível o endpoint [http://localhost:1337/graphql](http://lo
 }
 ```
 
+Provavelmente você terá fazer algumas alterações no código:
+
+1. Adicionar estas configurações [https://docs.strapi.io/cms/plugins/graphql#available-options](https://docs.strapi.io/cms/plugins/graphql#available-options) em `config/plugins.ts`
+2. Adicionar estas configurações [https://docs.strapi.io/cms/plugins/graphql#cors-exceptions-for-landing-page](https://docs.strapi.io/cms/plugins/graphql#cors-exceptions-for-landing-page) em `config/middlewares.ts`
+
 ### 40. Instalando e utilizando um Custom Field (CKEditor - Rich Text)
 
 Nas versões v3 e v4 do Strapi o rich editor padrão dele parecia mais um editor markdown. Uma alternativa mais rica era o plugin CKEditor que era mais completo. Mas na vesão v5 do Strapi o rich editor padrão dele parece mais moderno. Mas o CKEditor ainda suporta mais opções como imagens, AI Assistant, tabelas, etc.
