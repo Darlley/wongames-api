@@ -6,6 +6,11 @@ Inicio: 10/02/2025
 
 [![thumbnail](https://reactavancado.com.br/img/cover.png)](https://www.udemy.com/course/react-avancado/)
 
+![Captura de tela 2025-04-27 122613](https://github.com/user-attachments/assets/fcef76e6-b37d-425d-b67b-6c4caed3d4c1)
+![Captura de tela 2025-04-27 122531](https://github.com/user-attachments/assets/a3139783-a36d-4941-a964-5b11eca8e016)
+![Captura de tela 2025-04-27 122908](https://github.com/user-attachments/assets/b666dff6-855f-408e-bbc5-762c147081e5)
+![Captura de tela 2025-04-27 122707](https://github.com/user-attachments/assets/249379ef-8e94-40f9-8271-4283888f9c80)
+
 ## ANDAMENTO DAS AULAS
 
 | Seção 1: Módulo 1: Introdução Teórica                  | Status |
@@ -76,14 +81,14 @@ Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.
 | 47. Explicando como o backend do Strapi funciona                                    |   ✅   |
 | 48. Criando route e controller simples                                              |   ✅   |
 | 49. Entendendo o ctx (contexto de response/request do Koa)                          |   ✅   |
-| 50. Entendendo conceitos de Service e criando um simples                            |   ❌   |
-| 51. Fazendo fetch nos dados da API da GoG                                           |   ❌   |
-| 52. Fazendo scrapper dos dados de uma página com JSDOM                              |   ❌   |
-| 53. Criando dados com service create                                                |   ❌   |
-| 54. Buscando dados já criados e evitando erros de duplicação                        |   ❌   |
-| 55. Criando dados relacionais de Many to Many                                       |   ❌   |
-| 56. Criando a primeira estrutura dos jogos                                          |   ❌   |
-| 57. Fazendo upload de imagens com Form Data                                         |   ❌   |
-| 58. Fazendo tratamento de erros                                                     |   ❌   |
-| 59. Customizando nossa chamada a API com query params                               |   ❌   |
-| 60. Populando os dados e liberando/fechando rotas públicas                          |   ❌   |
+| 50. Entendendo conceitos de Service e criando um simples                            |   ✅   |
+| 51. Fazendo fetch nos dados da API da GoG                                           |   ✅   |
+| 52. Fazendo scrapper dos dados de uma página com JSDOM                              |   ✅   |
+| 53. Criando dados com service create                                                |   ✅   |
+| 54. Buscando dados já criados e evitando erros de duplicação                        |   ✅   |
+| 55. Criando dados relacionais de Many to Many                                       |   ✅   |
+| 56. Criando a primeira estrutura dos jogos                                          |   ✅   |
+| 57. Fazendo upload de imagens com Form Data                                         |   ✅   |
+| 58. Fazendo tratamento de erros                                                     |   ✅   |
+| 59. Customizando nossa chamada a API com query params                               |   ✅   |
+| 60. Populando os dados e liberando/fechando rotas públicas                          |   ✅   |
