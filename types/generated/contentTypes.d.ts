@@ -372,7 +372,8 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
   collectionName: 'banners';
   info: {
-    displayName: 'banner';
+    description: '';
+    displayName: 'Banner';
     pluralName: 'banners';
     singularName: 'banner';
   };
@@ -385,6 +386,7 @@ export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    game_link: Schema.Attribute.Relation<'oneToOne', 'api::game.game'>;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
