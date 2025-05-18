@@ -102,7 +102,7 @@ async function getGameInfo(slug: string) {
 
     return {
       description,
-      shortDescription,
+      shortDescription: shortDescription || description.slice(0, 150) + '...',
       rating: ratingElement
         ? ratingElement
             .getAttribute('xlink:href')
@@ -189,24 +189,44 @@ async function createManyToManyData(products) {
   ]);
 }
 
-async function setImage({ image, game, field = "cover" }) {
-  console.log("setImage")
-  const { data } = await axios.get(image, { responseType: "arraybuffer" });
-  const buffer = Buffer.from(data, "base64");
-
-  const FormData = require("form-data");
-
-  const formData: any = new FormData();
-
-  formData.append("refId", game.id);
-  formData.append("ref", `${gameService}`);
-  formData.append("field", field);
-  formData.append("files", buffer, { filename: `${game.slug}.jpg` });
-
-  console.info(`Uploading ${field} image: ${game.slug}.jpg`);
-
+async function prepareImageData({ image, field = "cover" }) {
   try {
-    await axios({
+    // Apenas verificar se conseguimos acessar a imagem e preparar os dados
+    console.log(`Verificando acesso à imagem de ${field}: ${image}`);
+    const { data } = await axios.get(image, { responseType: "arraybuffer" });
+    const buffer = Buffer.from(data, "base64");
+    
+    return { success: true, buffer };
+  } catch (error) {
+    console.log(`Erro ao acessar a imagem de ${field}: ${image}`, Exception(error));
+    return { success: false, error };
+  }
+}
+
+async function setImage({ image, game, field = "cover", preparedData = null }) {
+  try {
+    console.log(`Iniciando upload de ${field} para o jogo ${game.slug}`);
+    
+    // Usar dados já preparados ou fazer o download agora
+    let buffer;
+    if (preparedData && preparedData.buffer) {
+      buffer = preparedData.buffer;
+    } else {
+      const { data } = await axios.get(image, { responseType: "arraybuffer" });
+      buffer = Buffer.from(data, "base64");
+    }
+
+    const FormData = require("form-data");
+    const formData: any = new FormData();
+
+    formData.append("refId", game.id);
+    formData.append("ref", `${gameService}`);
+    formData.append("field", field);
+    formData.append("files", buffer, { filename: `${game.slug}.jpg` });
+
+    console.info(`Uploading ${field} image: ${game.slug}.jpg`);
+
+    const response = await axios({
       method: "POST",
       url: `http://localhost:1337/api/upload/`,
       data: formData,
@@ -214,25 +234,64 @@ async function setImage({ image, game, field = "cover" }) {
         "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
       },
     });
+    
+    return { success: true, response };
   } catch (error) {
-    console.log("setImage:", Exception(error));
+    console.log(`Erro no upload da imagem ${field} para o jogo ${game.slug}:`, Exception(error));
+    return { success: false, error };
   }
 }
 
 async function createGames(products) {
-  console.log("createGames")
-  await Promise.all(
+  console.log("createGames");
+  
+  const results = await Promise.all(
     products.map(async (product) => {
-      const item = await getByName(product.title, gameService);
+      try {
+        const item = await getByName(product.title, gameService);
 
-      if (!item) {
-        console.info(`Creating: ${product.title}...`);
+        if (!item) {
+          console.info(`Preparando para criar: ${product.title}...`);
 
-        const game = await strapi.service(gameService).create({
-          data: {
+          // Verificar acesso às imagens antes de criar o jogo
+          const coverImageData = await prepareImageData({ 
+            image: product.coverHorizontal, 
+            field: "cover" 
+          });
+          
+          if (!coverImageData.success) {
+            console.error(`Não foi possível acessar a imagem de capa para ${product.title}. Pulando criação do jogo.`);
+            return null;
+          }
+
+          // Verificar acesso às imagens da galeria
+          const galleryImagesData = await Promise.all(
+            product.screenshots.slice(0, 5).map((url) =>
+              prepareImageData({
+                image: `${url.replace(
+                  "{formatter}",
+                  "product_card_v2_mobile_slider_639"
+                )}`,
+                field: "gallery"
+              })
+            )
+          );
+
+          // Verificar se todas as imagens da galeria estão acessíveis
+          const allGalleryImagesAccessible = galleryImagesData.every(data => data.success);
+          
+          if (!allGalleryImagesAccessible) {
+            console.error(`Não foi possível acessar uma ou mais imagens da galeria para ${product.title}. Pulando criação do jogo.`);
+            return null;
+          }
+
+          console.info(`Verificação de acesso às imagens bem-sucedida para ${product.title}. Criando o registro do jogo.`);
+
+          // Criar o jogo
+          const gameData = {
             name: product.title,
             slug: product.slug,
-            price: product.price?.finalMoney?.amount ?? "0",
+            price: product.price?.finalMoney?.amount || product.price?.final?.replace('$', '') || "0",
             release_date: new Date(product.releaseDate),
             categories: await Promise.all(
               product.genres.map(({ name }) => getByName(name, categoryService))
@@ -253,28 +312,73 @@ async function createGames(products) {
               )
             ),
             ...(await getGameInfo(product.slug)),
-            publishedAt: new Date(),
-          },
-        });
+            // Não publicar o jogo ainda - será publicado somente após o upload das imagens
+            publishedAt: null,
+          };
 
-        await setImage({ image: product.coverHorizontal, game });
-        await Promise.all(
-          product.screenshots.slice(0, 5).map((url) =>
-            setImage({
-              image: `${url.replace(
-                "{formatter}",
-                "product_card_v2_mobile_slider_639"
-              )}`,
-              game,
-              field: "gallery",
-            })
-          )
-        );
+          // Criar o jogo no banco de dados
+          const game = await strapi.service(gameService).create({
+            data: gameData,
+          });
 
-        return game;
+          // Fazer o upload da imagem de capa
+          const coverUploadResult = await setImage({ 
+            image: product.coverHorizontal, 
+            game, 
+            preparedData: coverImageData 
+          });
+          
+          if (!coverUploadResult.success) {
+            console.error(`Falha no upload da imagem de capa para ${product.title}. Removendo jogo criado.`);
+            // Remover o jogo se o upload da capa falhar
+            await strapi.service(gameService).delete(game.id);
+            return null;
+          }
+
+          // Fazer o upload das imagens da galeria
+          const galleryUploadResults = await Promise.all(
+            product.screenshots.slice(0, 5).map((url, index) =>
+              setImage({
+                image: `${url.replace(
+                  "{formatter}",
+                  "product_card_v2_mobile_slider_639"
+                )}`,
+                game,
+                field: "gallery",
+                preparedData: galleryImagesData[index]
+              })
+            )
+          );
+
+          // Verificar se todos os uploads da galeria foram bem-sucedidos
+          const allGalleryUploadsSuccessful = galleryUploadResults.every(result => result.success);
+          
+          if (!allGalleryUploadsSuccessful) {
+            console.error(`Falha no upload de uma ou mais imagens da galeria para ${product.title}. Removendo jogo criado.`);
+            // Remover o jogo se algum upload da galeria falhar
+            await strapi.service(gameService).delete(game.id);
+            return null;
+          }
+
+          // Se chegou até aqui, todos os uploads foram bem-sucedidos
+          // Agora podemos publicar o jogo
+          await strapi.service(gameService).update(game.id, {
+            data: {
+              publishedAt: new Date()
+            }
+          });
+
+          console.info(`Jogo ${product.title} criado e publicado com sucesso!`);
+          return game;
+        }
+      } catch (error) {
+        console.error(`Erro ao processar o jogo ${product.title}:`, Exception(error));
+        return null;
       }
     })
   );
+  
+  return results.filter(Boolean);
 }
 
 export default factories.createCoreService(gameService, () => ({
