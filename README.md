@@ -92,3 +92,5 @@ Projeto Boilerplate: [https://github.com/Darlley/react-avancado](https://github.
 | 58. Fazendo tratamento de erros                                                     |   ✅   |
 | 59. Customizando nossa chamada a API com query params                               |   ✅   |
 | 60. Populando os dados e liberando/fechando rotas públicas                          |   ✅   |
+
+| Seção 28: Módulo 3: Criando a Home Page dinâmica |   ✅   |

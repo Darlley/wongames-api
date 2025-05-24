@@ -2,7 +2,6 @@ Código: [https://github.com/Won-Games/api-v2](https://github.com/Won-Games/api-
 Design: [https://www.figma.com/design...](https://www.figma.com/design/xwqB4b2hX8yPmp66vRuHLz/Won-Games---Em-Andamento!!?node-id=43-1&p=f&t=y61aiUXouaIOayI2-0)
 Design System do Strapi: [https://design-system.strapi.io...](https://design-system.strapi.io/?path=/docs/getting-started-welcome--docs)
 
-
 ## Seção 3: (2023) - Módulo 2: Iniciando com o Strapi
  
 ### 33. Criando a primeira Collection Type - Categories
@@ -14,7 +13,7 @@ Dentro de `Content-Type Builder` existem as `collection types`, `single types` e
 **COMPONENTS**: São componentes reutilizaveis, como botões, links, etc.
 
 No nosso projeto um jogo pode ter mais de uma categoria (`collection types`).
-Esta categoria precisa ter o nome da categoria, o slug para a página da categoria, a relação dela com os jogos e um identificador unico (UUID). 
+Esta categoria precisa ter o nome da categoria, o slug para a página da categoria, a relação dela com os jogos e um identificador unico (UUID).
 No admin do Stripe ja conseguimos adicionar todos estes tipos (fields) por padrão. A partir do Strapi v4 conseguimos adicionar até campos customizados, que são adicionados via plugins da comunidade.
 Vamos tratar o slug como se fosse nosso UID, então no field de UID damos o nome do campo de slug e vinculamos (Attached field) ele ao name da categoria, assim ele consegue gerar um slug automaticamente baseado no name da categoria.
 
@@ -77,6 +76,11 @@ Agora você tem disponível o endpoint [http://localhost:1337/graphql](http://lo
   }
 }
 ```
+
+Provavelmente você terá fazer algumas alterações no código:
+
+1. Adicionar estas configurações [https://docs.strapi.io/cms/plugins/graphql#available-options](https://docs.strapi.io/cms/plugins/graphql#available-options) em `config/plugins.ts`
+2. Adicionar estas configurações [https://docs.strapi.io/cms/plugins/graphql#cors-exceptions-for-landing-page](https://docs.strapi.io/cms/plugins/graphql#cors-exceptions-for-landing-page) em `config/middlewares.ts`
 
 ### 40. Instalando e utilizando um Custom Field (CKEditor - Rich Text)
 
